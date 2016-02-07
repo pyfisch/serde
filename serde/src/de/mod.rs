@@ -609,6 +609,14 @@ pub trait Visitor {
     {
         self.visit_bytes(&v)
     }
+
+    /// `visit_tag` deserializes a tagged value into a `Value`.
+    fn visit_tag<D, E>(&mut self, _format: &'static str, _tag: u64, _deserializer: D)
+        -> Result<Self::Value, E>
+        where D: Deserializer, E: Error,
+    {
+        unimplemented!()
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -700,7 +708,7 @@ pub trait MapVisitor {
         (0, None)
     }
 
-    /// Report that there 
+    /// Report that there
     fn missing_field<V>(&mut self, field: &'static str) -> Result<V, Self::Error>
         where V: Deserialize,
     {
